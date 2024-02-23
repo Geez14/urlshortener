@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+
+    <title>Document</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .card-view {
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+            margin: 0.5vh;
+            border-radius: 20px;
+            transition: 0.5s;
+            box-shadow: 10px 10px 5px 0px gray;
+            background-color: whitesmoke;
+        }
+
+        #post-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-view:hover {
+            transition: 0.5s;
+            box-shadow: 5px 5px 10px 0px gray;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <div class="card-view">
+            <h1 class="Item">URLShortener</h1>
+            <form id="post-form">
+                {% csrf_token %}
+                <input type="text" name="link" id="link" placeholder="Enter URL here">
+
+                <div class="buttons">
+                    <button type="submit" id="shorten">Shorten</button>
+                </div>
+            </form>
+            <section id="section">
+                <h2 tag="resultLink"></h2>
+            </section>
+        </div>
+    </main>
+
+    <script type="text/javascript">
+        $(document).on('submit', '#post-form', function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: '/create',
+                data: {
+                    link: $('#link').val(),
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                },
+                success: function (data) {
+                    const headLink = "localhost:8000/";
+                    $("h2").html(headLink + data);
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
