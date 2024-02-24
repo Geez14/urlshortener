@@ -10,3 +10,6 @@
 10. Add shortened url redirection
 11. Add url parser in shortner/views
 12. Query to avoid multiple url with diffrent shortened url
+
+## NOTE:
+* I'm saving URL/Link as URL in the database!!
