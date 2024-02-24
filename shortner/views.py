@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 import uuid
 from .models import Url, MAXLENGTH_UUID
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 import re
 
 
@@ -31,8 +31,12 @@ def create(request):
 
 
 def go(request, pk):
-    url_details = Url.objects.get(uuid=pk)
-    return redirect(url_details.link)
+    try:
+        url_details = Url.objects.get(uuid=pk)
+        return redirect(url_details.link)
+    except Url.DoesNotExist:
+        return render(request, "error.html")
+        
 
 
 def parse_url(link):
@@ -46,7 +50,3 @@ def parse_url(link):
 
     # else return false, so we can reject link generation!
     return False
-
-
-"""
-Check weather the link is available in the table or not!"""
