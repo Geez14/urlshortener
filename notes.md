@@ -13,3 +13,6 @@
 
 ## NOTE:
 * I'm saving URL/Link as URL in the database!!
+
+## instruction to host this web application online!
+1. we are going to use ***gunicorn*** and ***django-heroku***
