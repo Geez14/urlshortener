@@ -1,5 +1,6 @@
 **Website is live**
-**link** [pythonanywhere](https://mxtylish.pythonanywhere.com)
+
+**link :** [pythonanywhere](https://mxtylish.pythonanywhere.com)
 
 An Web Application to shorten the long urls into short urls
 Future Implementation:
