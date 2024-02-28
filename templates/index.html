@@ -16,28 +16,21 @@
         }
 
         main {
+            min-width:300px;
             width: 50%;
         }
-
-        @media screen and (max-width:500px) {
-
-            main {
-                width: fit-content;
-            }
-
-        }
-
         button {
             transition: 0.5s;
-            &:hover {
-                transform: scale(1.25);
-            }
+            border-radius:10px
+        }
+        button:hover {
+            transform: scale(1.25);
         }
 
         #link {
             border-radius: 20px;
             border: solid black;
-            height: 50px;
+            padding:10px;
         }
 
         .card-view {
@@ -82,7 +75,7 @@
                 </div>
             </form>
             <section id="section">
-                <h2 tag="resultLink"></h2>
+                <h3 tag="resultLink"></h3>
             </section>
         </div>
     </main>
@@ -99,7 +92,7 @@
                 },
                 success: function (data) {
                     const headLink = "localhost:8000/";
-                    $("h2").html(headLink + data);
+                    $("h3").html(headLink + data);
                 }
             });
         });
