@@ -10,24 +10,16 @@ import re
 # ------------------------------------------------------- BUISNESS LOGIC ----------------------------------------------------------------------
 
 def __parse_url(link):
-    start = time.time()
     if len(link) > 10000:
-        print(f"Time to calculate badlink size: {start-time.time()}")
         return False
 
     # true then good link!
     if re.match("(http|https)://", link):
-        print(f"Time to pass level1 parsing: {time.time()-start}")
         return link
 
     # true if the url entered doesnt have http/https but it is correct url!
     if re.match("[A-Za-z0-9+&@#\/%?=~_|!:,;]*[.]+[a-z0-9+&@#\/%=~_|]", link):
-        print(f"Time to pass level-2 parsing: {time.time()-start}")
         return "https://" + link
-
-    # else return false, so we can reject link generation!
-    print(f"Time to fail parsing: {time.time()-start}")
-
 
 
 def __get_id(link:str) -> str:
@@ -74,7 +66,7 @@ def go(request, pk):
 
 def api_create(request, key):
     default = json.dumps({"error":"404", "message":"only POST request is accepted"})
-
+    start = time()
     if request.method == "GET":
         if Api_Keys.objects.filter(api_key=key).exists():
             data = request.body
@@ -84,15 +76,17 @@ def api_create(request, key):
                 return HttpResponseBadRequest("NO BODY FOUND")
 
             link = data.get("url")
+            # url not found in body json
             if link == None:
                 return HttpResponseBadRequest("NO URL FOUND IN PAYLOAD")
 
             link = __parse_url(link)
-
+            # parsing fails for the link
             if link == None:
                 return HttpResponseBadRequest("BAD URL FORMAT")
             
             data["shorturl"] = __get_id(link)
+            print("TIME TAKEN: ", int(time()-start))
             # parse the url
             return HttpResponse(json.dumps(data))
         else:
