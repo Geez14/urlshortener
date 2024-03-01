@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
-import uuid
-from .models import Url, MAXLENGTH_UUID, Api_Keys
 from django.http import HttpResponse, HttpResponseBadRequest, Http404, HttpResponseNotAllowed
-import re
+from .models import Url, MAXLENGTH_UUID, Api_Keys
 import time
+import uuid
 import json
+import re
 
 
 # ------------------------------------------------------- BUISNESS LOGIC ----------------------------------------------------------------------
@@ -34,8 +34,7 @@ def __get_id(link:str) -> str:
 
         # if URL already Exist! then don't make any other uid!
         if Url.objects.filter(link=link).exists():
-            print(Url.objects.get(link=link).uuid)
-            return "processing..."
+            return Url.objects.get(link=link).uuid
 
         uid = str(uuid.uuid4())[:MAXLENGTH_UUID]
         new_url = Url(link=link, uuid=uid)
@@ -54,14 +53,13 @@ def home(request):
 
 def create(request):
     if request.method == "POST":
-        link = __parse_url(link)
-
+        link = __parse_url(request.POST["link"])
+        
         # return empty http response!
         if link == None:
             return HttpResponseBadRequest("BAD KEYWORD")
         else:
-            print(__get_id(link))
-            return HttpResponse("sdf")
+            return HttpResponse(__get_id(link))
     else :
         return HttpResponseBadRequest("GET REQUEST, NOT SUPPORTED!")
 
@@ -76,18 +74,25 @@ def go(request, pk):
 
 def api_create(request, key):
     default = json.dumps({"error":"404", "message":"only POST request is accepted"})
+
     if request.method == "GET":
         if Api_Keys.objects.filter(api_key=key).exists():
             data = request.body
-            data = json.loads(data)
+            try:
+                data = json.loads(data)
+            except Exception:
+                return HttpResponseBadRequest("NO BODY FOUND")
 
-            if data.get("url") == None:
+            link = data.get("url")
+            if link == None:
                 return HttpResponseBadRequest("NO URL FOUND IN PAYLOAD")
 
-            if __parse_url(data.get("url")) == False:
+            link = __parse_url(link)
+
+            if link == None:
                 return HttpResponseBadRequest("BAD URL FORMAT")
             
-            data["shorturl"] = ""
+            data["shorturl"] = __get_id(link)
             # parse the url
             return HttpResponse(json.dumps(data))
         else:
