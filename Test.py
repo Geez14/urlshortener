@@ -1,4 +1,5 @@
 import re
+import sys
 def parse_url(link):
     # true then good link!
     if re.match("(http|https)://", link):
@@ -9,3 +10,7 @@ def parse_url(link):
 
 
 print("is www.==https://www..", parse_url("www.") == "https://www.")
+
+# code to calculate size
+s = "HelloWorld"
+print(sys.getsizeof(s))
