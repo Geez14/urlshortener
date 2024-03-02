@@ -7,3 +7,7 @@ MAXLENGTH_UUID = 5
 class Url(models.Model):
     link = models.CharField(max_length=10000)
     uuid = models.CharField(max_length=MAXLENGTH_UUID)
+
+
+class Api_Keys(models.Model):
+    api_key = models.CharField(max_length=64, primary_key = True)

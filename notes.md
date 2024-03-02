@@ -16,3 +16,19 @@
 
 ## instruction to host this web application online!
 1. we are going to use ***gunicorn*** and ***django-heroku***
+
+## random generator sucks!
+* using uuid4 and taking first 5 character from the uuid4 is bad, randomness < 16 ^ 5!
+* using random.choice() on (26 + 26 + 10) alphabet + number is bad too, randomness < 62 ^ 5 as we are not randomizing the static main character string>.
+> abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890
+
+> abcdefghixyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890jklmnopqrstuvw
+
+> bcdefghixyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890jklmnopqrstuvwa...
+* final, using python's **secrets** library
+
+``` python
+import secrets
+
+random_string = secrets.token_urlsafe(5)
+```
