@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseBadRequest, Http404, HttpResponseNotAllowed
 from .models import Url, MAXLENGTH_UUID, Api_Keys
-import time
-import random
+from time import time
+import secrets
+# import random
 # creating collision of uuid
 # import uuid
 import json
@@ -32,8 +33,8 @@ def __get_id(link:str) -> str:
         # if Url.objects.filter(link=link).exists():
             # return Url.objects.get(link=link).uuid
 
-        uid = "".join([random.choice(characters) for _ in range(MAXLENGTH_UUID)])
-
+        # uid = "".join([random.choice(characters) for _ in range(MAXLENGTH_UUID)])
+        uid = secrets.token_urlsafe(MAXLENGTH_UUID)
         new_url = Url(link=link, uuid=uid)
         new_url.save()
 
