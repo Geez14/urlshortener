@@ -2,12 +2,16 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseBadRequest, Http404, HttpResponseNotAllowed
 from .models import Url, MAXLENGTH_UUID, Api_Keys
 import time
-import uuid
+import random
+# creating collision of uuid
+# import uuid
 import json
 import re
 
 
 # ------------------------------------------------------- BUISNESS LOGIC ----------------------------------------------------------------------
+
+characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
 
 def __parse_url(link):
     if len(link) > 10000:
@@ -25,10 +29,11 @@ def __parse_url(link):
 def __get_id(link:str) -> str:
 
         # if URL already Exist! then don't make any other uid!
-        if Url.objects.filter(link=link).exists():
-            return Url.objects.get(link=link).uuid
+        # if Url.objects.filter(link=link).exists():
+            # return Url.objects.get(link=link).uuid
 
-        uid = str(uuid.uuid4())[:MAXLENGTH_UUID]
+        uid = "".join([random.choice(characters) for _ in range(MAXLENGTH_UUID)])
+
         new_url = Url(link=link, uuid=uid)
         new_url.save()
 
