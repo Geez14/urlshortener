@@ -2,7 +2,7 @@ from django.db import models
 # Create your models here.
 
 # url table and column is link and uuid
-MAXLENGTH_UUID = 5
+MAXLENGTH_UUID = 7
 
 class Url(models.Model):
     link = models.CharField(max_length=10000)
