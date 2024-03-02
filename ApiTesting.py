@@ -5,13 +5,13 @@ from time import time
 
 #-----------Data--------
 
-payload = {'url': 'https://www.pythonanywhere.com/user/Mxtylish'}
+payload = {'url': 'https://www.google.com'}
 print("payloadsize: ", len(payload['url'])+3+50)
 url = payload['url']
 listOfresponses = []
 
 #-------Settings--------
-count = 30
+count = 3
 prev_time = 0
 next_time = 0
 max_rps = 0
@@ -37,7 +37,7 @@ while count > 0 :
     response = requests.get(url = f"https://mxtylish.pythonanywhere.com/create/api_key=1234567890", json=payload)
     listOfresponses.append(response)
     print("number of request per second : ", rps, count, end="\r")
-    # print("number of request per min: ", rpm,end ="\r")
+    print("number of request per min: ", rpm,end ="\r")
     count -= 1
 #-------------------------ENDJOB-----------------------
     
