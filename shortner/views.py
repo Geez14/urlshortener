@@ -12,7 +12,7 @@ import re
 
 # ------------------------------------------------------- BUISNESS LOGIC ----------------------------------------------------------------------
 
-characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+# characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
 
 def __parse_url(link):
     if len(link) > 10000:
@@ -28,13 +28,17 @@ def __parse_url(link):
 
 
 def __get_id(link:str) -> str:
-
+        
+        # VERY SLOW
         # if URL already Exist! then don't make any other uid!
         # if Url.objects.filter(link=link).exists():
             # return Url.objects.get(link=link).uuid
 
+        # Vulnerable?
         # uid = "".join([random.choice(characters) for _ in range(MAXLENGTH_UUID)])
-        uid = secrets.token_urlsafe(MAXLENGTH_UUID)
+
+        uid = secrets.token_urlsafe(MAXLENGTH_UUID-2)
+
         new_url = Url(link=link, uuid=uid)
         new_url.save()
 
