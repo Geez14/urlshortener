@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"
         integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
-    <title>UrlShortner</title>
+
+    <title>URLShortener</title>
     <style>
         body {
             display: flex;
@@ -15,33 +16,28 @@
         }
 
         main {
+            min-width:500px;
             width: 50%;
         }
-
-        @media screen and (max-width:500px) {
-
-            main {
-                width: fit-content;
-            }
-
-        }
-
         button {
             transition: 0.5s;
-            &:hover {
-                transform: scale(1.25);
-            }
+            border-radius:10px;
+            border:none;
+            padding:10px;
+        }
+        button:hover {
+            transform: scale(1.25);
         }
 
         #link {
             border-radius: 20px;
-            border: solid black;
-            height: 50px;
+            border: solid gray;
+            width:400px;
+            text-align:center;
+            padding:10px;
         }
 
         .card-view {
-            height: 100%;
-            width: 100%;
             padding: 10px;
             display: flex;
             flex-direction: column;
@@ -81,7 +77,7 @@
                 </div>
             </form>
             <section id="section">
-                <h2 tag="resultLink"></h2>
+                <h3 tag="resultLink"></h3>
             </section>
         </div>
     </main>
@@ -98,7 +94,7 @@
                 },
                 success: function (data) {
                     const headLink = "localhost:8000/";
-                    $("h2").html(headLink + data);
+                    $("h3").html(headLink + data);
                 }
             });
         });
