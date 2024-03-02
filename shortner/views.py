@@ -76,7 +76,6 @@ def go(request, pk):
 
 def api_create(request, key):
     default = json.dumps({"error":"404", "message":"only POST request is accepted"})
-    start = time()
     if request.method == "GET":
         if Api_Keys.objects.filter(api_key=key).exists():
             data = request.body
@@ -96,7 +95,6 @@ def api_create(request, key):
                 return HttpResponseBadRequest("BAD URL FORMAT")
             
             data["shorturl"] = __get_id(link)
-            print("TIME TAKEN: ", int(time()-start))
             # parse the url
             return HttpResponse(json.dumps(data))
         else:
