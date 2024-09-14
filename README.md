@@ -2,7 +2,7 @@
 
 **link :** [pythonanywhere](https://mxtylish.pythonanywhere.com)
 
-An Web Application to shorten the long urls into short urls
+A Web Application to shorten the long urls into short urls
 * Add API support
 * maximum request speed: 271-100 rps
 * minimum request speed: 70-45
